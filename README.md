@@ -25,9 +25,25 @@ header field: authorization: token( which we got at step 1);
 Response body will contain audio features object in JSON format.
 GET https://api.spotify.com/v1/audio-features/{id}
 
-use a for loop to loop thru array
+ALBUM ART FUNCTION:
+Similar to Danceability function.
+
+use a for loop to loop thru array of SONGS, so that we dont need to call fetch so many times.
+
+danceability and art function will both push the number and string value into an empty arrays that were in the global var: artArray and danceArray.
+We will later use these arrays in our if statements to ascertain who is the winner.
+
+
+
 
 Am stuck due to scoping errors!!!! 
 undefined:1 GET file:///C:/Users/User/Desktop/wdi/danceoff/undefined net::ERR_FILE_NOT_FOUND
 
 when i console.log artArray and danceArray, it returns the values, but not when I console.log it into my function. This probably means that when i call in my function, it has not yet fetched the information. So what do I do :(
+
+
+    things to add: 
+    TIMER FOR EACH ROUND
+    ++ points each round
+    End messages!
+    
