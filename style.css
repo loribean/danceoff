@@ -12,8 +12,8 @@ body {
 }
 h1 {
     font-family: 'Viga', sans-serif;
-    font-size: 100px;
-    margin: 130px auto 0px auto;
+    font-size: 170px;
+    margin:0px auto 0px auto;
     text-transform: uppercase;
     
 }
@@ -21,6 +21,7 @@ h1 {
 h3{
     font-family: 'Carter One', cursive;
     margin: 0px auto 40px auto;
+    font-size: 30px;
 }
 
 
@@ -28,16 +29,29 @@ h3{
     background-color: white;
     color: #7b41c6;
     padding: 10px;
-    width: 200px;
-    margin: 70px auto;
+    width: 150px;
+    margin: 250px auto;
     font-family: 'Viga', sans-serif;
     border-radius: 25px;
 }
 
 #logo{
-    width: 200px;
+    width: 140px;
 }
 
 .hide {
     display: none;
+}
+ul{
+    list-style: none;
+}
+
+li{
+    display: inline-block;
+   
+    height: 250px;
+    width: 250px;
+    margin: 40px;
+    background-color:whitesmoke;
+    border-radius: 25px;
 }
