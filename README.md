@@ -13,5 +13,14 @@ USING THE SPOTIFY API:
 url : https://accounts.spotify.com/api/token
 method: POST
 body: grant_type : client_credentials
-header: authorization: Basic <base64 encoded client_id:client_secret>
+header: 'Authorization': Basic <base64 encoded clientId:clientSecret>
 
+
+2. After getting the token, we can use spotify's endpoint!
+For this use case, we will be getting 2 things from spotify's endpoints, danceability and album art!
+
+DANCEABILITY FUNCTION:
+needs id parameter: go to song, right click, and copy song's URI. ID is the random string at the back
+header field: authorization: token( which we got at step 1);
+Response body will contain audio features object in JSON format.
+GET https://api.spotify.com/v1/audio-features/{id}

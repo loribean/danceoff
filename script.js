@@ -1,6 +1,7 @@
 //global variables:
 const clientId ="07a76bdd80624a979c8a9b9fdb23d403";
 const clientSecret ="a415ee3805d14240a8e8d6ed2ee9bef1";
+let token;
 
 
 
@@ -9,11 +10,17 @@ var startButton = document.querySelector('.buttonGo');
 var playerPoints = 0;
 
 var song1 = {
-     track: 'Cry (with John Martin',
+     track: 'Cry (with John Martin)',
       artist: 'Gryffin, John Martin',
-      id : '1TF8rXy87zrnpBlS9TLykA'
-
-}
+      id : '1TF8rXy87zrnpBlS9TLykA',
+      dancebility : 0
+};
+var song2 = {
+    track: 'Savage Love',
+     artist: 'Jawsh 685, Jason Derulo',
+     id : '1xQ6trAsedVPCdbtDAmk0c',
+     dancebility : 0
+};
 
 //API PORTION
 
@@ -21,7 +28,7 @@ var song1 = {
 
 const _getToken = async () => {
 
-    const result = await fetch('https://accounts.spotify.com/api/token',{
+    const response = await fetch('https://accounts.spotify.com/api/token',{
     method: 'POST',
     headers: {
         'Content-Type': "application/x-www-form-urlencoded",
@@ -30,20 +37,25 @@ const _getToken = async () => {
     body: 'grant_type=client_credentials'
     });
 
-    const data = await result.json();
-    const token = data.access_token;
+    const authenticate = await response.json();
+    token = authenticate.access_token;
     return token;
-    
 };
 
+//calling the function so the rest of the API calls can work w the token
+_getToken();
+
 // Using the token we got in order to acesss spotify's endpoints
-const _getTracks = async (token, tracksEndPoint) => {
-    const limit = 2; //cause we only want to get two tracks each turn
+const getDance = async (token) => {
 
-    const result = await fetch()
-
+    const result = await fetch (`https://api.spotify.com/v1/audio-features/${song1.id}`,{
+        method: 'GET',
+        headers: { 'Authorization' : 'Bearer ' + token}
+    });
+    const data = await result.json();
+    song1.dancebility = data.dancebility;
+    return song1.dancebility;
 }
-
 
 
 
@@ -56,5 +68,6 @@ startButton.addEventListener("click", function(){
     startButton.classList.add("hide");
     console.log('game starting!')
     //fetch artist, song, album art and dancebility index from spotify
-    _getToken();
+    getDance(token);
+    console.log(song1.dancebility);
 });
