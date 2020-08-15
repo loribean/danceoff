@@ -136,10 +136,10 @@ startButton.addEventListener("click", function(){
     console.log('game starting!')
     //fetch artist, song, album art and dancebility index from spotify
     getDanceArtAll();  
+    songOne.src=artArray[0];
+    songTwo.src= artArray[1];
+    titleOne.innerText = `${songs[0].track} by ${songs[0].artist}`;
+    titletwo.innerText = `${songs[1].track} by ${songs[1].artist}`;
     
 });
 
-songOne.src=artArray[0];
-songTwo.src= artArray[1];
-titleOne.innerText = `${songs[0].track} by ${songs[0].artist}`;
-titletwo.innerText = `${songs[1].track} by ${songs[1].artist}`;
