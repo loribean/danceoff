@@ -1,0 +1,43 @@
+@import url('https://fonts.googleapis.com/css2?family=Carter+One&family=Raleway:ital,wght@0,300;0,400;1,300&family=Viga&display=swap');
+*{
+    text-align: center;
+    box-sizing: border-box;
+    color: whitesmoke;
+
+}
+
+body {
+    background: rgb(69,63,251);
+    background: linear-gradient(90deg, rgba(69,63,251,1) 0%, rgba(252,70,70,1) 100%);;
+}
+h1 {
+    font-family: 'Viga', sans-serif;
+    font-size: 100px;
+    margin: 130px auto 0px auto;
+    text-transform: uppercase;
+    
+}
+
+h3{
+    font-family: 'Carter One', cursive;
+    margin: 0px auto 40px auto;
+}
+
+
+.buttonGo {
+    background-color: white;
+    color: #7b41c6;
+    padding: 10px;
+    width: 200px;
+    margin: 70px auto;
+    font-family: 'Viga', sans-serif;
+    border-radius: 25px;
+}
+
+#logo{
+    width: 200px;
+}
+
+.hide {
+    display: none;
+}
