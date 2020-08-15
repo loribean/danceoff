@@ -46,12 +46,25 @@ ul{
     list-style: none;
 }
 
-li{
+.song1, .song2
+ {
     display: inline-block;
-   
     height: 250px;
     width: 250px;
-    margin: 40px;
-    background-color:whitesmoke;
+    margin: 20px;
+    background-color:black;
     border-radius: 25px;
+}
+
+#imageone {
+
+    width: 80%;
+    margin-top: 10px;
+    border-radius: 50%;
+}
+
+p {
+    font-family: 'Viga', sans-serif;
+    color: #1ED760;
+
 }

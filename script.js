@@ -1,10 +1,11 @@
 //global variables:
 const clientId ="07a76bdd80624a979c8a9b9fdb23d403";
-const clientSecret ="a415ee3805d14240a8e8d6ed2ee9bef1";
+
 
 
 let token;
 let data ;
+let album ;
 let danceArray = [];
 let artArray =[];
 
@@ -12,45 +13,50 @@ let artArray =[];
 
 var gamePage = document.getElementById('gamePage');
 var startButton = document.querySelector('.buttonGo');
+var songOne = document.getElementById('imageone');
+var songTwo = document.getElementById('imageone');
+var titleOne = document.getElementById('titleone');
+var titleTwo = document.getElementById('titletwo');
 var playerPoints = 0;
 //array to store all song info
 var songs = [ 
-    { track: 'Cry (with John Martin)',
-      artist: 'Gryffin, John Martin',
-      id : '1TF8rXy87zrnpBlS9TLykA',
-      art : ""
+    { track: 'Nobody Compares To You (feat. Katie Pearlman)',
+      artist: 'Gryffin, Katie Pearlman',
+      id : '17ejRbr6B8l9zdqgCZsn4m',
+      albumId: '2IAVHJdaRPFA6MQqXHoG75'
+
     
 },
     { track: 'Savage Love',
      artist: 'Jawsh 685, Jason Derulo',
      id : '1xQ6trAsedVPCdbtDAmk0c',
-     art :"",
+     albumId :'1XMw3pBrYeXzNXZXc84DNw',
      
 },
     { track: 'ROCKSTAR (feat. Roddy Ricch)',
      artist: 'DaBaby, Roddy Ricch',
      id : '7ytR5pFWmSjzHJIeQkgog4',
-     art :""
+     albumId :'623PL2MBg50Br5dLXC9E9e'
      
 },
 {    track: 'Watermelon Sugar',
      artist: 'Harry Styles',
      id : '6UelLqGlWMcVH1E5c4H7lY',
-     art :""
+     albumId :'7xV2TzoaVc0ycW7fwBwAml'
      
 },
 {    track: 'Dance Monkey',
      artist: 'Tones And I',
      id : '1rgnBhdG2JDFTbYkYRZAku',
-     art :""
+     albumId : '0UywfDKYlyiu1b38DRrzYD'
      
 },
 {    track: 'Blueberry Faygo',
      artist: 'Lil Faygo',
      id : '22LAwLoDA5b4AaGSkg6bKW',
-     art :""
+     albumId : '6rBennOYWR1OZQnsU39PKL'
      
-},
+}
 
 
 ]
@@ -94,17 +100,26 @@ const getDance =  async (token) => {
             }
             
  //for loop to loop thru songs array so we dont have to keep calling getdance for each array
-const getDanceAll = function () {
+const getDanceArtAll = function () {
     for(i = 0; i<songs.length; i++ ) {
         getDance(token);
-        //call the art function
+        getArt(token);
+        
 }
 };
 
 // get album art
 
 const getArt = async (token) => {
-    const result = await fetch ('')
+    const result = await fetch (`https://api.spotify.com/v1/albums/${songs[i].albumId}`, {
+        method: 'GET' ,
+        headers: { 'Authorization' : 'Bearer ' + token}
+    });
+    album = await result.json();
+    let albumArt = album.images[1].url;
+    artArray.push(albumArt);
+    return artArray; // array will contain all the values we need! yay
+
 }
 
 
@@ -120,7 +135,11 @@ startButton.addEventListener("click", function(){
     startButton.classList.add("hide");
     console.log('game starting!')
     //fetch artist, song, album art and dancebility index from spotify
-    getDanceAll();
+    getDanceArtAll();  
     
 });
 
+songOne.src=artArray[0];
+songTwo.src= artArray[1];
+titleOne.innerText = `${songs[0].track} by ${songs[0].artist}`;
+titletwo.innerText = `${songs[1].track} by ${songs[1].artist}`;
