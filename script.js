@@ -1,6 +1,6 @@
 //global variables:
 const clientId ="07a76bdd80624a979c8a9b9fdb23d403";
-const clientSecret ="a415ee3805d14240a8e8d6ed2ee9bef1";
+const clientSecret =;
 let token;
 
 
