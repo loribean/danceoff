@@ -20,7 +20,7 @@ h1 {
 
 h3{
     font-family: 'Carter One', cursive;
-    margin: 0px auto 40px auto;
+    margin: 0px auto 0px auto;
     font-size: 30px;
 }
 
@@ -90,6 +90,13 @@ p {
 }
 
 #endScore{
-    
+
     color: #1DB954;
+}
+
+#premise {
+    font-size: 15px;
+    font-family: 'Carter One', cursive;
+    color: #1DB954;
+    
 }

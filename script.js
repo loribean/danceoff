@@ -5,6 +5,7 @@ const clientId ="07a76bdd80624a979c8a9b9fdb23d403";
 
 
 
+
 let token;
 let data ;
 let album ;
@@ -60,7 +61,7 @@ _getToken();
 
 
 // Using the token we got in order to acesss spotify's endpoints
-//get Global Top 50 playlist : 20 tracks, album art, artist, track id
+//get Global Top 50 playlist : 40 tracks, album art, artist, track id
 
 const getPlaylistItems = async (token) => {
     const fields = "items(track(id%2Cname%2Calbum(images%2Cartists)))";
@@ -83,11 +84,10 @@ const getPlaylistItems = async (token) => {
     return playlistData;
 }
 
-//populate arrays
 
 
 
-//get danceability info
+//get danceability info with token, and track id that we got from getPlayListItems
 const getDance =  async (token,j) => {
             const result = await fetch (`https://api.spotify.com/v1/audio-features/${songIdArray[j]}`,{
             method: 'GET',
