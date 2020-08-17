@@ -66,6 +66,30 @@ ul{
 
 p {
     font-family: 'Viga', sans-serif;
-    color: #1ED760;
+    color:white;
 
+}
+
+#nextround {
+    background-color: white;
+    color: #7b41c6;
+    padding: 10px;
+    width: 150px;
+    margin: 0 auto;
+    font-family: 'Viga', sans-serif;
+    border-radius: 25px;
+}
+
+#score {
+    color: #1DB954;
+}
+
+#endMessage {
+    font-family: 'Carter One', cursive;
+    font-size: 20px;
+}
+
+#endScore{
+    
+    color: #1DB954;
 }

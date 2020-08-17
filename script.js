@@ -64,7 +64,7 @@ _getToken();
 
 const getPlaylistItems = async (token) => {
     const fields = "items(track(id%2Cname%2Calbum(images%2Cartists)))";
-    const limit = 10;
+    const limit = 40;
     const result = await fetch(`https://api.spotify.com/v1/playlists/${playlist_id}/tracks?fields=${fields}&limit=${limit}`, {
         method: 'GET',
         headers: { 'Authorization' : 'Bearer ' + token}
@@ -72,7 +72,7 @@ const getPlaylistItems = async (token) => {
 
         playlistData = await result.json();
         sleep(50);
-    for(i=0; i< 10; i++) {
+    for(i=0; i< 40; i++) {
         console.log(playlistData);
         songIdArray.push(playlistData.items[i].track.id);
         trackArray.push(playlistData.items[i].track.name);
@@ -120,7 +120,7 @@ function sleep(ms) {
 
   async function populate() {
     console.log('Taking a break...');
-    await sleep(2000);
+    await sleep(300);
     console.log('Two seconds later, showing sleep in a loop...');
     titleOne.innerText = `${trackArray[0]} by ${artistArray[0]}`;
     titleTwo.innerText = `${trackArray[1]} by ${artistArray[1]}`;
@@ -131,12 +131,8 @@ function sleep(ms) {
     artArray = artArray.slice(2);
     danceArray = danceArray.slice(2); // removes them from start of array
     trackArray =trackArray.slice(2);
-    console.log(songOne.id);
     console.log("from populate" + songTwo.id);
-    console.log(trackArray);
-    console.log(danceArray);
-    console.log(artArray);
-    console.log(songIdArray);
+
   }
 
   
@@ -191,11 +187,6 @@ const nextRound = function () {
     artArray = artArray.slice(2);
     danceArray = danceArray.slice(2); // removes them from start of array
     trackArray= trackArray.slice(2)
-    console.log(songOne.id);
-    console.log(songTwo.id);
-    console.log(trackArray);
-    console.log(danceArray);
-    console.log(artArray);
 };
 
 //end game set up
@@ -204,11 +195,14 @@ const endGame = function() {
     endPage.classList.remove("hide");
     gamePage.classList.add("hide");
 
-    if(playerPoints >= 2){
+    if(playerPoints >= 15){
         endMessage.innerText ="You're super groovy";
         endScore.innerText = `YOUR SCORE: ${playerPoints}`
-    } else if (playerPoints < 2) {
+    } else if (playerPoints < 4) {
         endMessage.innerText ="Forgot to put on your groovy pants?";
+        endScore.innerText = `YOUR SCORE: ${playerPoints}`
+    } else if(playerPoints >4 && playerPoints <15) {
+        endMessage.innerText ="You're almost groovy!";
         endScore.innerText = `YOUR SCORE: ${playerPoints}`
     }
 }
