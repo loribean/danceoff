@@ -56,7 +56,8 @@ ul{
     border-radius: 25px;
 }
 
-#imageone {
+#imageone,
+#imagetwo {
 
     width: 80%;
     margin-top: 10px;

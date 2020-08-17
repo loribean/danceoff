@@ -3,20 +3,24 @@ const clientId ="07a76bdd80624a979c8a9b9fdb23d403";
 
 
 
+
 let token;
 let data ;
 let album ;
 let danceArray = [];
 let artArray =[];
+let roundStatus;
 
 
 
 var gamePage = document.getElementById('gamePage');
 var startButton = document.querySelector('.buttonGo');
-var songOne = document.getElementById('imageone');
-var songTwo = document.getElementById('imageone');
+var imageOne = document.getElementById('imageone');
+var imageTwo = document.getElementById('imagetwo');
 var titleOne = document.getElementById('titleone');
 var titleTwo = document.getElementById('titletwo');
+var songOne = document.querySelector(".song1");
+var songTwo = document.querySelector(".song2");
 var playerPoints = 0;
 //array to store all song info
 var songs = [ 
@@ -84,6 +88,7 @@ const _getToken = async () => {
 //calling the function so the rest of the API calls can work w the token
 _getToken();
 
+
 // Using the token we got in order to acesss spotify's endpoints
 
 //get danceability info
@@ -104,6 +109,7 @@ const getDanceArtAll = function () {
     for(i = 0; i<songs.length; i++ ) {
         getDance(token);
         getArt(token);
+
         
 }
 };
@@ -122,24 +128,63 @@ const getArt = async (token) => {
 
 }
 
+// populate song and art into containers:
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  };
 
-            
+  async function populate() {
+    console.log('Taking a break...');
+    await sleep(2000);
+    console.log('Two seconds later, showing sleep in a loop...');
+    titleOne.innerText = `${songs[0].track} by ${songs[0].artist}`;
+    titleTwo.innerText = `${songs[1].track} by ${songs[1].artist}`;
+    imageOne.src = artArray[0];
+    imageTwo.src = artArray[1];
+    songOne.id = danceArray [0];
+    songTwo.id = danceArray [1];
+    console.log(songOne.id);
+    console.log(songTwo.id);
+  }
 
-
-
-
-
+  
 //event listener for start button
 startButton.addEventListener("click", function(){
     gamePage.classList.remove("hide");
     startButton.classList.add("hide");
     console.log('game starting!')
     //fetch artist, song, album art and dancebility index from spotify
-    getDanceArtAll();  
-    songOne.src=artArray[0];
-    songTwo.src= artArray[1];
-    titleOne.innerText = `${songs[0].track} by ${songs[0].artist}`;
-    titletwo.innerText = `${songs[1].track} by ${songs[1].artist}`;
-    
+   getDanceArtAll();
+   populate();
 });
 
+// if statements to compare two songs danceability
+
+const playGame = function(currentOption, otherOption) {
+    if(currentOption.id > otherOption.id) {
+        playerPoints ++;
+        roundStatus = 'win';
+        console.log(roundStatus);
+    } else if (currentOption.id < otherOption.id) {
+        roundStatus ='lose';
+        console.log(roundStatus);
+        
+    } 
+}
+ songOne.addEventListener("click", function(){
+     playGame(songOne,songTwo)
+     console.log("clicked!")
+ });
+
+ songTwo.addEventListener("click", function(){
+    playGame(songTwo,songOne)
+    console.log("clicked!")
+});
+
+// need to make sure that when user clicks one, they cannot click the other one
+
+//next round set up
+
+const nextRound = function () {
+    
+}
