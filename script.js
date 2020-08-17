@@ -8,9 +8,9 @@ const clientId ="07a76bdd80624a979c8a9b9fdb23d403";
 let token;
 let data ;
 let album ;
-let danceArray = [];
-let artArray =[];
+let playlist_id = '37i9dQZEVXbMDoHDwVN2tF'
 let roundStatus;
+let playlistData;
 
 
 
@@ -27,47 +27,13 @@ var next = document.querySelector("#nextround");
 var endPage = document.getElementById("endPage");
 var playerPoints = 0;
 //array to store all song info
-var songs = [ 
-    { track: 'Nobody Compares To You (feat. Katie Pearlman)',
-      artist: 'Gryffin, Katie Pearlman',
-      id : '17ejRbr6B8l9zdqgCZsn4m',
-      albumId: '2IAVHJdaRPFA6MQqXHoG75'
 
-    
-},
-    { track: 'Savage Love',
-     artist: 'Jawsh 685, Jason Derulo',
-     id : '1xQ6trAsedVPCdbtDAmk0c',
-     albumId :'1XMw3pBrYeXzNXZXc84DNw',
-     
-},
-    { track: 'ROCKSTAR (feat. Roddy Ricch)',
-     artist: 'DaBaby, Roddy Ricch',
-     id : '7ytR5pFWmSjzHJIeQkgog4',
-     albumId :'623PL2MBg50Br5dLXC9E9e'
-     
-},
-{    track: 'Watermelon Sugar',
-     artist: 'Harry Styles',
-     id : '6UelLqGlWMcVH1E5c4H7lY',
-     albumId :'7xV2TzoaVc0ycW7fwBwAml'
-     
-},
-{    track: 'Dance Monkey',
-     artist: 'Tones And I',
-     id : '1rgnBhdG2JDFTbYkYRZAku',
-     albumId : '0UywfDKYlyiu1b38DRrzYD'
-     
-},
-{    track: 'Blueberry Faygo',
-     artist: 'Lil Faygo',
-     id : '22LAwLoDA5b4AaGSkg6bKW',
-     albumId : '6rBennOYWR1OZQnsU39PKL'
-     
-}
+let songIdArray =[];
+let trackArray =[];
+let artistArray =[]
+let danceArray = [];
+let artArray =[];
 
-
-]
 
 //API PORTION
 
@@ -94,43 +60,58 @@ _getToken();
 
 
 // Using the token we got in order to acesss spotify's endpoints
+//get Global Top 50 playlist : 20 tracks, album art, artist, track id
+
+const getPlaylistItems = async (token) => {
+    const fields = "items(track(id%2Cname%2Calbum(images%2Cartists)))";
+    const limit = 10;
+    const result = await fetch(`https://api.spotify.com/v1/playlists/${playlist_id}/tracks?fields=${fields}&limit=${limit}`, {
+        method: 'GET',
+        headers: { 'Authorization' : 'Bearer ' + token}
+    });
+
+        playlistData = await result.json();
+        sleep(50);
+    for(i=0; i< 10; i++) {
+        console.log(playlistData);
+        songIdArray.push(playlistData.items[i].track.id);
+        trackArray.push(playlistData.items[i].track.name);
+        artArray.push(playlistData.items[i].track.album.images[1].url);
+        artistArray.push(playlistData.items[i].track.album.artists[0].name);
+        console.log(artistArray);
+    }
+    return playlistData;
+}
+
+//populate arrays
+
+
 
 //get danceability info
-const getDance =  async (token) => {
-            const result = await fetch (`https://api.spotify.com/v1/audio-features/${songs[i].id}`,{
+const getDance =  async (token,j) => {
+            const result = await fetch (`https://api.spotify.com/v1/audio-features/${songIdArray[j]}`,{
             method: 'GET',
             headers: { 'Authorization' : 'Bearer ' + token}
             });
 
             data = await result.json();
             let danceData = data.danceability;
-            danceArray.push(danceData)
-            return danceArray; // array will contain all the values we need! yay
+            console.log("pushing data")
+            danceArray.push(danceData);
             }
             
  //for loop to loop thru songs array so we dont have to keep calling getdance for each array
-const getDanceArtAll = function () {
-    for(i = 0; i<songs.length; i++ ) {
-        getDance(token);
-        getArt(token);
-
-        
-}
+const getDanceAll = async function () {
+    console.log(songIdArray);
+    await sleep(200);
+  for(let j=0; j < songIdArray.length; j++){
+    getDance(token,j)
+  }
 };
 
-// get album art
 
-const getArt = async (token) => {
-    const result = await fetch (`https://api.spotify.com/v1/albums/${songs[i].albumId}`, {
-        method: 'GET' ,
-        headers: { 'Authorization' : 'Bearer ' + token}
-    });
-    album = await result.json();
-    let albumArt = album.images[1].url;
-    artArray.push(albumArt);
-    return artArray; // array will contain all the values we need! yay
 
-}
+
 
 // populate song and art into containers:
 function sleep(ms) {
@@ -141,20 +122,21 @@ function sleep(ms) {
     console.log('Taking a break...');
     await sleep(2000);
     console.log('Two seconds later, showing sleep in a loop...');
-    titleOne.innerText = `${songs[0].track} by ${songs[0].artist}`;
-    titleTwo.innerText = `${songs[1].track} by ${songs[1].artist}`;
+    titleOne.innerText = `${trackArray[0]} by ${artistArray[0]}`;
+    titleTwo.innerText = `${trackArray[1]} by ${artistArray[1]}`;
     imageOne.src = artArray[0];
     imageTwo.src = artArray[1];
     songOne.id = danceArray [0];
     songTwo.id = danceArray [1];
     artArray = artArray.slice(2);
     danceArray = danceArray.slice(2); // removes them from start of array
-    songs = songs.slice(2);
+    trackArray =trackArray.slice(2);
     console.log(songOne.id);
-    console.log(songTwo.id);
-    console.log(songs);
+    console.log("from populate" + songTwo.id);
+    console.log(trackArray);
     console.log(danceArray);
     console.log(artArray);
+    console.log(songIdArray);
   }
 
   
@@ -164,7 +146,9 @@ startButton.addEventListener("click", function(){
     startButton.classList.add("hide");
     console.log('game starting!')
     //fetch artist, song, album art and dancebility index from spotify
-   getDanceArtAll();
+    getPlaylistItems(token);
+   getDanceAll();
+   console.log(danceArray);
    populate();
 });
 
@@ -198,18 +182,18 @@ const playGame = function(currentOption, otherOption) {
 //next round set up
 
 const nextRound = function () {
-    titleOne.innerText = `${songs[0].track} by ${songs[0].artist}`;
-    titleTwo.innerText = `${songs[1].track} by ${songs[1].artist}`;
+    titleOne.innerText = `${trackArray[0]} by ${artistArray[0]}`;
+    titleTwo.innerText = `${trackArray[1]} by ${artistArray[1]}`;
     imageOne.src = artArray[0];
     imageTwo.src = artArray[1];
     songOne.id = danceArray [0];
     songTwo.id = danceArray [1];
     artArray = artArray.slice(2);
     danceArray = danceArray.slice(2); // removes them from start of array
-    songs= songs.slice(2)
+    trackArray= trackArray.slice(2)
     console.log(songOne.id);
     console.log(songTwo.id);
-    console.log(songs);
+    console.log(trackArray);
     console.log(danceArray);
     console.log(artArray);
 };
@@ -230,8 +214,8 @@ const endGame = function() {
 }
 
 next.addEventListener("click", function(){
-    console.log(songs.length)
-    if(songs.length > 0) {
+    console.log(trackArray.length)
+    if(trackArray.length > 0) {
         nextRound();
     } else {
         endGame();
