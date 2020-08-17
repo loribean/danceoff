@@ -4,6 +4,7 @@ const clientId ="07a76bdd80624a979c8a9b9fdb23d403";
 
 
 
+
 let token;
 let data ;
 let album ;
@@ -21,6 +22,9 @@ var titleOne = document.getElementById('titleone');
 var titleTwo = document.getElementById('titletwo');
 var songOne = document.querySelector(".song1");
 var songTwo = document.querySelector(".song2");
+var score = document.querySelector("#score");
+var next = document.querySelector("#nextround");
+var endPage = document.getElementById("endPage");
 var playerPoints = 0;
 //array to store all song info
 var songs = [ 
@@ -143,8 +147,14 @@ function sleep(ms) {
     imageTwo.src = artArray[1];
     songOne.id = danceArray [0];
     songTwo.id = danceArray [1];
+    artArray = artArray.slice(2);
+    danceArray = danceArray.slice(2); // removes them from start of array
+    songs = songs.slice(2);
     console.log(songOne.id);
     console.log(songTwo.id);
+    console.log(songs);
+    console.log(danceArray);
+    console.log(artArray);
   }
 
   
@@ -174,11 +184,13 @@ const playGame = function(currentOption, otherOption) {
  songOne.addEventListener("click", function(){
      playGame(songOne,songTwo)
      console.log("clicked!")
+     score.innerText = `SCORE : ${playerPoints}`;
  });
 
  songTwo.addEventListener("click", function(){
     playGame(songTwo,songOne)
     console.log("clicked!")
+    score.innerText = `SCORE : ${playerPoints}`
 });
 
 // need to make sure that when user clicks one, they cannot click the other one
@@ -186,5 +198,43 @@ const playGame = function(currentOption, otherOption) {
 //next round set up
 
 const nextRound = function () {
-    
+    titleOne.innerText = `${songs[0].track} by ${songs[0].artist}`;
+    titleTwo.innerText = `${songs[1].track} by ${songs[1].artist}`;
+    imageOne.src = artArray[0];
+    imageTwo.src = artArray[1];
+    songOne.id = danceArray [0];
+    songTwo.id = danceArray [1];
+    artArray = artArray.slice(2);
+    danceArray = danceArray.slice(2); // removes them from start of array
+    songs= songs.slice(2)
+    console.log(songOne.id);
+    console.log(songTwo.id);
+    console.log(songs);
+    console.log(danceArray);
+    console.log(artArray);
+};
+
+//end game set up
+
+const endGame = function() {
+    endPage.classList.remove("hide");
+    gamePage.classList.add("hide");
+
+    if(playerPoints >= 2){
+        endMessage.innerText ="You're super groovy";
+        endScore.innerText = `YOUR SCORE: ${playerPoints}`
+    } else if (playerPoints < 2) {
+        endMessage.innerText ="Forgot to put on your groovy pants?";
+        endScore.innerText = `YOUR SCORE: ${playerPoints}`
+    }
 }
+
+next.addEventListener("click", function(){
+    console.log(songs.length)
+    if(songs.length > 0) {
+        nextRound();
+    } else {
+        endGame();
+    }
+    
+})
