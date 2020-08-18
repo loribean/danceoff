@@ -9,11 +9,16 @@ const clientId ="07a76bdd80624a979c8a9b9fdb23d403";
 let token;
 let data ;
 let album ;
-let playlist_id = '37i9dQZEVXbMDoHDwVN2tF'
+let playlistIdArray = ['37i9dQZEVXbMDoHDwVN2tF','37i9dQZEVXbK4gjvS1FjPY','37i9dQZEVXbJVi45MafAu0'];
+
+let playlist_id;
 let roundStatus;
 let playlistData;
 
-
+var menu = document.querySelector('.menu');
+var global50 = document.getElementById("global");
+var singapore = document.getElementById("singapore");
+var viral = document.getElementById("viral");
 
 var gamePage = document.getElementById('gamePage');
 var startButton = document.querySelector('.buttonGo');
@@ -27,6 +32,7 @@ var score = document.querySelector("#score");
 var next = document.querySelector("#nextround");
 var endPage = document.getElementById("endPage");
 var playerPoints = 0;
+
 //array to store all song info
 
 let songIdArray =[];
@@ -61,7 +67,7 @@ _getToken();
 
 
 // Using the token we got in order to acesss spotify's endpoints
-//get Global Top 50 playlist : 40 tracks, album art, artist, track id
+//get selected playlist : 40 tracks, album art, artist, track id
 
 const getPlaylistItems = async (token) => {
     const fields = "items(track(id%2Cname%2Calbum(images%2Cartists)))";
@@ -99,7 +105,7 @@ const getDance =  async (token,j) => {
             console.log("pushing data")
             danceArray.push(danceData);
             }
-            
+
  //for loop to loop thru songs array so we dont have to keep calling getdance for each array
 const getDanceAll = async function () {
     console.log(songIdArray);
@@ -114,6 +120,8 @@ const getDanceAll = async function () {
 
 
 // populate song and art into containers:
+
+//sleep function so that the data is fetched bEFORE the populate function is called
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
   };
@@ -131,11 +139,23 @@ function sleep(ms) {
     artArray = artArray.slice(2);
     danceArray = danceArray.slice(2); // removes them from start of array
     trackArray =trackArray.slice(2);
-    console.log("from populate" + songTwo.id);
+    artistArray = artistArray.slice(2);
 
   }
+//event listener for playlist menu
+global50.addEventListener("click",function(){
+    playlist_id=playlistIdArray[0]
+    menu.classList.add('hide');
+})
+singapore.addEventListener("click",function(){
+    playlist_id=playlistIdArray[1]
+    menu.classList.add('hide');
+})
+viral.addEventListener("click",function(){
+    playlist_id=playlistIdArray[2]
+    menu.classList.add('hide');
+})
 
-  
 //event listener for start button
 startButton.addEventListener("click", function(){
     gamePage.classList.remove("hide");
@@ -158,19 +178,30 @@ const playGame = function(currentOption, otherOption) {
     } else if (currentOption.id < otherOption.id) {
         roundStatus ='lose';
         console.log(roundStatus);
-        
-    } 
+
+    }
 }
  songOne.addEventListener("click", function(){
      playGame(songOne,songTwo)
      console.log("clicked!")
      score.innerText = `SCORE : ${playerPoints}`;
+      if(trackArray.length > 0) {
+        nextRound();
+    } else {
+        endGame();
+    }
+
  });
 
  songTwo.addEventListener("click", function(){
     playGame(songTwo,songOne)
     console.log("clicked!")
-    score.innerText = `SCORE : ${playerPoints}`
+    score.innerText = `SCORE : ${playerPoints}`;
+     if(trackArray.length > 0) {
+        nextRound();
+    } else {
+        endGame();
+    }
 });
 
 // need to make sure that when user clicks one, they cannot click the other one
@@ -186,7 +217,8 @@ const nextRound = function () {
     songTwo.id = danceArray [1];
     artArray = artArray.slice(2);
     danceArray = danceArray.slice(2); // removes them from start of array
-    trackArray= trackArray.slice(2)
+    trackArray= trackArray.slice(2);
+    artistArray = artistArray.slice(2);
 };
 
 //end game set up
@@ -206,13 +238,3 @@ const endGame = function() {
         endScore.innerText = `YOUR SCORE: ${playerPoints}`
     }
 }
-
-next.addEventListener("click", function(){
-    console.log(trackArray.length)
-    if(trackArray.length > 0) {
-        nextRound();
-    } else {
-        endGame();
-    }
-    
-})

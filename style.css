@@ -12,10 +12,10 @@ body {
 }
 h1 {
     font-family: 'Viga', sans-serif;
-    font-size: 170px;
+    font-size: 100px;
     margin:0px auto 0px auto;
     text-transform: uppercase;
-    
+
 }
 
 h3{
@@ -30,13 +30,18 @@ h3{
     color: #7b41c6;
     padding: 10px;
     width: 150px;
-    margin: 250px auto;
+    margin: 100px auto;
     font-family: 'Viga', sans-serif;
     border-radius: 25px;
+    transition: all 0.5s;
+  	cursor: pointer;
+
 }
 
+
+
 #logo{
-    width: 140px;
+    width: 80px;
 }
 
 .hide {
@@ -46,15 +51,31 @@ ul{
     list-style: none;
 }
 
+.songs{
+	display:flex;
+	justify-content: center;
+	margin: 0 auto;
+	width: 80%;
+}
+
+
+
 .song1, .song2
  {
-    display: inline-block;
-    height: 250px;
-    width: 250px;
-    margin: 20px;
-    background-color:black;
+    height: 300px;
+    width: 300px;
+    margin: 30px;
     border-radius: 25px;
+    text-align: center;
+
 }
+
+#titleone,
+#titletwo {
+	padding: 0px;
+}
+
+
 
 #imageone,
 #imagetwo {
@@ -68,17 +89,9 @@ p {
     font-family: 'Viga', sans-serif;
     color:white;
 
+
 }
 
-#nextround {
-    background-color: white;
-    color: #7b41c6;
-    padding: 10px;
-    width: 150px;
-    margin: 0 auto;
-    font-family: 'Viga', sans-serif;
-    border-radius: 25px;
-}
 
 #score {
     color: #1DB954;
@@ -98,5 +111,29 @@ p {
     font-size: 15px;
     font-family: 'Carter One', cursive;
     color: #1DB954;
-    
+
+}
+
+#global, #singapore, #viral {
+	display: inline-block;
+	font-size: 20px;
+    padding: 10px;
+    height: 50px;
+    margin: 20px auto;
+    font-family: 'Viga', sans-serif;
+    border-radius: 25px;
+  	cursor: pointer;
+  	background-color: white;
+}
+
+#global {
+	color: #fcb045;
+}
+
+#singapore {
+	color:#c52a62
+}
+
+#viral {
+	color: #7b41c6;
 }
