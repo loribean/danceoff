@@ -9,17 +9,17 @@ const clientId ="07a76bdd80624a979c8a9b9fdb23d403";
 let token;
 let data ;
 let album ;
-let playlistIdArray = ['37i9dQZEVXbMDoHDwVN2tF','37i9dQZEVXbK4gjvS1FjPY','37i9dQZEVXbJVi45MafAu0'];
 
-let playlist_id;
 let roundStatus;
 let playlistData;
 
+let playlistIdArray = ['37i9dQZEVXbMDoHDwVN2tF','37i9dQZEVXbK4gjvS1FjPY','37i9dQZEVXbJVi45MafAu0'];
+
+let playlist_id;
 var menu = document.querySelector('.menu');
 var global50 = document.getElementById("global");
 var singapore = document.getElementById("singapore");
 var viral = document.getElementById("viral");
-
 var gamePage = document.getElementById('gamePage');
 var startButton = document.querySelector('.buttonGo');
 var imageOne = document.getElementById('imageone');
@@ -32,7 +32,6 @@ var score = document.querySelector("#score");
 var next = document.querySelector("#nextround");
 var endPage = document.getElementById("endPage");
 var playerPoints = 0;
-
 //array to store all song info
 
 let songIdArray =[];
@@ -67,7 +66,7 @@ _getToken();
 
 
 // Using the token we got in order to acesss spotify's endpoints
-//get selected playlist : 40 tracks, album art, artist, track id
+//get Global Top 50 playlist : 40 tracks, album art, artist, track id
 
 const getPlaylistItems = async (token) => {
     const fields = "items(track(id%2Cname%2Calbum(images%2Cartists)))";
@@ -105,7 +104,7 @@ const getDance =  async (token,j) => {
             console.log("pushing data")
             danceArray.push(danceData);
             }
-
+            
  //for loop to loop thru songs array so we dont have to keep calling getdance for each array
 const getDanceAll = async function () {
     console.log(songIdArray);
@@ -120,15 +119,13 @@ const getDanceAll = async function () {
 
 
 // populate song and art into containers:
-
-//sleep function so that the data is fetched bEFORE the populate function is called
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
   };
 
   async function populate() {
     console.log('Taking a break...');
-    await sleep(300);
+    await sleep(500);
     console.log('Two seconds later, showing sleep in a loop...');
     titleOne.innerText = `${trackArray[0]} by ${artistArray[0]}`;
     titleTwo.innerText = `${trackArray[1]} by ${artistArray[1]}`;
@@ -136,35 +133,39 @@ function sleep(ms) {
     imageTwo.src = artArray[1];
     songOne.id = danceArray [0];
     songTwo.id = danceArray [1];
+    console.log(danceArray);
     artArray = artArray.slice(2);
     danceArray = danceArray.slice(2); // removes them from start of array
     trackArray =trackArray.slice(2);
-    artistArray = artistArray.slice(2);
-
+    artistArray= artistArray.slice(2)
+    
   }
 //event listener for playlist menu
 global50.addEventListener("click",function(){
     playlist_id=playlistIdArray[0]
     menu.classList.add('hide');
+    createPlayer()
 })
 singapore.addEventListener("click",function(){
     playlist_id=playlistIdArray[1]
     menu.classList.add('hide');
+    createPlayer()
 })
 viral.addEventListener("click",function(){
     playlist_id=playlistIdArray[2]
     menu.classList.add('hide');
+    createPlayer()
 })
-
+  
 //event listener for start button
-startButton.addEventListener("click", function(){
+startButton.addEventListener("click", function(e){
+    e.stopPropagation();
     gamePage.classList.remove("hide");
     startButton.classList.add("hide");
     console.log('game starting!')
     //fetch artist, song, album art and dancebility index from spotify
     getPlaylistItems(token);
    getDanceAll();
-   console.log(danceArray);
    populate();
 });
 
@@ -178,26 +179,29 @@ const playGame = function(currentOption, otherOption) {
     } else if (currentOption.id < otherOption.id) {
         roundStatus ='lose';
         console.log(roundStatus);
-
-    }
+        
+    } 
 }
- songOne.addEventListener("click", function(){
+ songOne.addEventListener("click", function(e){
+    e.stopPropagation();
+    e.preventDefault();
      playGame(songOne,songTwo)
      console.log("clicked!")
      score.innerText = `SCORE : ${playerPoints}`;
-      if(trackArray.length > 0) {
+     if(trackArray.length > 0) {
         nextRound();
     } else {
         endGame();
     }
-
  });
 
- songTwo.addEventListener("click", function(){
+ songTwo.addEventListener("click", function(e){
+    e.stopPropagation();
+    e.preventDefault();
     playGame(songTwo,songOne)
     console.log("clicked!")
-    score.innerText = `SCORE : ${playerPoints}`;
-     if(trackArray.length > 0) {
+    score.innerText = `SCORE : ${playerPoints}`
+    if(trackArray.length > 0) {
         nextRound();
     } else {
         endGame();
@@ -217,8 +221,9 @@ const nextRound = function () {
     songTwo.id = danceArray [1];
     artArray = artArray.slice(2);
     danceArray = danceArray.slice(2); // removes them from start of array
-    trackArray= trackArray.slice(2);
-    artistArray = artistArray.slice(2);
+    trackArray= trackArray.slice(2)
+    artistArray= artistArray.slice(2)
+    
 };
 
 //end game set up
@@ -238,3 +243,25 @@ const endGame = function() {
         endScore.innerText = `YOUR SCORE: ${playerPoints}`
     }
 }
+
+function createPlayer() { 
+              
+    /* Create iframe element */ 
+    var ifram = document.createElement("IFRAME"); 
+      
+    /* Set the source attribute */ 
+    ifram.setAttribute("src",  
+    `https://open.spotify.com/embed/playlist/${playlist_id}`); 
+      
+    /* Set the iframe height */ 
+    ifram.setAttribute("height", "300"); 
+      
+    /* Set the iframe width */ 
+    ifram.setAttribute("width", "380"); 
+
+    ifram.setAttribute("frameborder", "0");
+    ifram.setAttribute("allowtransparency", "true");
+    ifram.setAttribute("allow", "encrypted-media");
+      
+    document.body.appendChild(ifram); 
+} 

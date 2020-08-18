@@ -22,13 +22,14 @@
             </div>
             <div class="song2">
                 <img id="imagetwo" src="" alt="">
-                <p id="titletwo">SONG2</p>
+                    <p id="titletwo">SONG2</p>
+                  </div>
             </div>
-
+                
         </div>
              <p id="score">Score:</p>
-
     </div>
+    
     <div class="hide" id="endPage">
         <p id="endScore">YOUR SCORE:</p>
         <p id="endMessage">END MESSAGE</p>
@@ -43,8 +44,14 @@
     <div class="startPage">
         <p class="buttonGo">Let's Go!</p>
     </div>
-
+    
 
     <script src="script.js"></script>
+    <script src="https://sdk.scdn.co/spotify-player.js"></script>
+    <script>
+        window.onSpotifyWebPlaybackSDKReady = () => {
+          // You can now initialize Spotify.Player and use the SDK
+        };
+        </script>
 </body>
 </html>
