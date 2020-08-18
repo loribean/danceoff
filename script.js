@@ -5,21 +5,23 @@ const clientId ="07a76bdd80624a979c8a9b9fdb23d403";
 
 
 
-
 let token;
 let data ;
 let album ;
+let playlistSearch;
+let selectedPlaylist;
+let selectedPlaylistImg;
 
 let roundStatus;
 let playlistData;
 
-let playlistIdArray = ['37i9dQZEVXbMDoHDwVN2tF','37i9dQZEVXbK4gjvS1FjPY','37i9dQZEVXbJVi45MafAu0'];
+
+
 
 let playlist_id;
-var menu = document.querySelector('.menu');
-var global50 = document.getElementById("global");
-var singapore = document.getElementById("singapore");
-var viral = document.getElementById("viral");
+var selected = document.getElementById("selected");
+var searchDiv = document.querySelector(".search");
+let go = document.getElementById("go");
 var gamePage = document.getElementById('gamePage');
 var startButton = document.querySelector('.buttonGo');
 var imageOne = document.getElementById('imageone');
@@ -29,7 +31,6 @@ var titleTwo = document.getElementById('titletwo');
 var songOne = document.querySelector(".song1");
 var songTwo = document.querySelector(".song2");
 var score = document.querySelector("#score");
-var next = document.querySelector("#nextround");
 var endPage = document.getElementById("endPage");
 var playerPoints = 0;
 //array to store all song info
@@ -66,7 +67,24 @@ _getToken();
 
 
 // Using the token we got in order to acesss spotify's endpoints
-//get Global Top 50 playlist : 40 tracks, album art, artist, track id
+
+
+const getSearch = async (token,input) =>{
+    const q = input;
+    const type = "playlist";
+    limit =1;
+    const result = await fetch (`https://api.spotify.com/v1/search?q=${q}&type=${type}&limit=${limit}`,{
+            method: 'GET',
+            headers: { 'Authorization' : 'Bearer ' + token}
+            });
+
+            playlistSearch = await result.json();
+            playlist_id = playlistSearch.playlists.items[0].id;
+            selectedPlaylist = playlistSearch.playlists.items[0].name;
+            selectedPlaylistImg = playlistSearch.playlists.items[0].images[0].url;
+            console.log(playlistSearch);
+
+}
 
 const getPlaylistItems = async (token) => {
     const fields = "items(track(id%2Cname%2Calbum(images%2Cartists)))";
@@ -141,20 +159,15 @@ function sleep(ms) {
     
   }
 //event listener for playlist menu
-global50.addEventListener("click",function(){
-    playlist_id=playlistIdArray[0]
-    menu.classList.add('hide');
-    createPlayer()
-})
-singapore.addEventListener("click",function(){
-    playlist_id=playlistIdArray[1]
-    menu.classList.add('hide');
-    createPlayer()
-})
-viral.addEventListener("click",function(){
-    playlist_id=playlistIdArray[2]
-    menu.classList.add('hide');
-    createPlayer()
+go.addEventListener('click', function(){
+    
+    var input = document.getElementById("input").value;
+    searchDiv.classList.add('hide');
+    console.log(input)
+    getSearch(token,input);
+    sleep(100);
+    selected.innerText= `You chose ${selectedPlaylist}`
+    
 })
   
 //event listener for start button
@@ -162,6 +175,7 @@ startButton.addEventListener("click", function(e){
     e.stopPropagation();
     gamePage.classList.remove("hide");
     startButton.classList.add("hide");
+    createPlayer();
     console.log('game starting!')
     //fetch artist, song, album art and dancebility index from spotify
     getPlaylistItems(token);

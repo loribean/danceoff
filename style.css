@@ -67,8 +67,7 @@ ul{
     margin: 30px;
     border-radius: 25px;
     text-align: center;
-    border: 1px red solid;
-
+    
 }
 
 #titleone,
@@ -128,7 +127,10 @@ p {
 
 }
 
-#global, #singapore, #viral {
+input{
+    color: black;
+}
+/* #global, #singapore, #viral {
 	display: inline-block;
 	font-size: 20px;
     padding: 10px;
@@ -150,4 +152,4 @@ p {
 
 #viral {
 	color: #7b41c6;
-}
+} */
