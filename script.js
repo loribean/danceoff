@@ -1,6 +1,6 @@
 //global variables:
 const clientId ="07a76bdd80624a979c8a9b9fdb23d403";
-const clientSecret = ${{clientSecret}};
+const clientSecret = ${{secret.clientSecret}};
 
 
 
