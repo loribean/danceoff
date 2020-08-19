@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Carter+One&family=Raleway:ital,wght@0,300;0,400;1,300&family=Viga&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Carter+One&family=Open+Sans&family=Viga&display=swap');
 *{
     text-align: center;
     box-sizing: border-box;
@@ -25,16 +25,28 @@ h3{
 }
 
 
-.buttonGo {
+
+
+
+.btn-bg-slide {
     background-color: white;
     color: #7b41c6;
     padding: 10px;
     width: 150px;
-    margin: 100px auto;
     font-family: 'Viga', sans-serif;
     border-radius: 25px;
-    transition: all 0.5s;
-  	cursor: pointer;
+    cursor: pointer;
+    margin: 20px auto;
+    box-shadow: inset 0 0 0 0 #7b41c6;
+    transition: 200ms ease-in-out;
+      
+}
+
+.btn-bg-slide:hover,
+.btn-bg-slide:focus{
+    box-shadow: inset 150px 0 0 0 #7b41c6;
+    color: white;
+   
 
 }
 
@@ -47,9 +59,7 @@ h3{
 .hide {
     display: none;
 }
-ul{
-    list-style: none;
-}
+
 
 .songs{
 	display:flex;
@@ -83,19 +93,6 @@ ul{
     margin-top: 10px;
     border-radius: 50%;
 }
-.overlay {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    opacity: 0;
-    transition: .5s ease;
-    background-color: #008CBA;
-  }
-  .song1:hover .overlay {
-    opacity: 1;
-  }
 
 
 p {
@@ -128,28 +125,32 @@ p {
 }
 
 input{
-    color: black;
-}
-/* #global, #singapore, #viral {
-	display: inline-block;
-	font-size: 20px;
-    padding: 10px;
+    color: #7b41c6;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: bolder;
+    width: 300px;
     height: 50px;
-    margin: 20px auto;
-    font-family: 'Viga', sans-serif;
-    border-radius: 25px;
-  	cursor: pointer;
-  	background-color: white;
+    
 }
 
-#global {
-	color: #fcb045;
+.search {
+    font-family: 'Open Sans', sans-serif;
+    margin-top: 50px;
+    font-weight: bolder;
+    font-size: 20px;
 }
 
-#singapore {
-	color:#c52a62
+
+.btn-border-pop{
+    position: relative;
+    cursor: pointer;
+    padding: .5em .5em;
+    outline: none;
 }
 
-#viral {
-	color: #7b41c6;
-} */
+
+.btn-border-pop:hover,
+.btn-border-pop:focus{
+    border: 3px solid #1DB954;
+    transition: top , left, right, bottom, 100ms ease-in-out;
+}

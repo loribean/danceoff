@@ -1,37 +1,16 @@
-This application is a dance off between two songs.
-Using spotify's danceability rating on each track, we will pit two randomized songs against each other.
-The user will have to guess which song has a higher danceability rating.
-The user will have 3 seconds per round
-The user will get his result after the game.
+# Danceoff
+Dance off is a game based on spotify's danceability index for each track, made using Html, css and vanilla js.
 
+#GamePlay
+1. Start by searching for a playlist! 
+2. Next, choose the track you think is more danceable! You can use the embeded player to listen to the tracks to judge for yourself.
+3. End! What was your score? You can try again with any playlist you desire!
+4. Happy guessing!
 
-USING THE SPOTIFY API:
- Using Client Credentials Flow: as we do NOT need user information. 
-
- 1. Application first needs to request for authorization token
-
-url : https://accounts.spotify.com/api/token
-method: POST
-body: grant_type : client_credentials
-header: 'Authorization': Basic <base64 encoded clientId:clientSecret>
-
-
-2. After getting the token, we can use spotify's endpoint!
-For this use case, we will be getting 2 things from spotify's endpoints, danceability and album art!
-
-DANCEABILITY FUNCTION:
-needs id parameter: go to song, right click, and copy song's URI. ID is the random string at the back
-header field: authorization: token( which we got at step 1);
-Response body will contain audio features object in JSON format.
-GET https://api.spotify.com/v1/audio-features/{id}
+#Background
+Danceoff uses spotify's api to access search, audio features and playlist endpoints
 
 
 
-
-    things to add: 
-    TIMER FOR EACH ROUND
-    ++ points each round DONE
-    End messages! DONE
-    USER CAN CHOOSE PLAYLIST!
     
     

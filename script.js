@@ -5,6 +5,7 @@ const clientId ="07a76bdd80624a979c8a9b9fdb23d403";
 
 
 
+
 let token;
 let data ;
 let album ;
@@ -20,10 +21,12 @@ let playlistData;
 
 let playlist_id;
 var selected = document.getElementById("selected");
+var selectedImg = document.getElementById("selectedImg");
 var searchDiv = document.querySelector(".search");
 let go = document.getElementById("go");
 var gamePage = document.getElementById('gamePage');
-var startButton = document.querySelector('.buttonGo');
+var startPage = document.querySelector('.startPage')
+var startButton = document.querySelector('#buttonGo');
 var imageOne = document.getElementById('imageone');
 var imageTwo = document.getElementById('imagetwo');
 var titleOne = document.getElementById('titleone');
@@ -144,19 +147,59 @@ function sleep(ms) {
   async function populate() {
     console.log('Taking a break...');
     await sleep(500);
-    console.log('Two seconds later, showing sleep in a loop...');
-    titleOne.innerText = `${trackArray[0]} by ${artistArray[0]}`;
-    titleTwo.innerText = `${trackArray[1]} by ${artistArray[1]}`;
-    imageOne.src = artArray[0];
-    imageTwo.src = artArray[1];
-    songOne.id = danceArray [0];
-    songTwo.id = danceArray [1];
-    console.log(danceArray);
-    artArray = artArray.slice(2);
-    danceArray = danceArray.slice(2); // removes them from start of array
-    trackArray =trackArray.slice(2);
-    artistArray= artistArray.slice(2)
-    
+    if(trackArray.length % 2 !== 0) {
+        trackArray.pop();
+        artArray.pop();
+        artistArray.pop();
+        danceArray.pop();
+        titleOne.innerText = `${trackArray[0]} by ${artistArray[0]}`;
+        titleTwo.innerText = `${trackArray[1]} by ${artistArray[1]}`;
+        imageOne.src = artArray[0];
+        imageTwo.src = artArray[1];
+        songOne.id = danceArray [0];
+        songTwo.id = danceArray [1];
+        console.log(danceArray);
+        artArray = artArray.slice(2);
+        danceArray = danceArray.slice(2); // removes them from start of array
+        trackArray =trackArray.slice(2);
+        artistArray= artistArray.slice(2)
+    }else if (trackArray.length % 2 === 0){
+        titleOne.innerText = `${trackArray[0]} by ${artistArray[0]}`;
+        titleTwo.innerText = `${trackArray[1]} by ${artistArray[1]}`;
+        imageOne.src = artArray[0];
+        imageTwo.src = artArray[1];
+        songOne.id = danceArray [0];
+        songTwo.id = danceArray [1];
+        console.log(danceArray);
+        artArray = artArray.slice(2);
+        danceArray = danceArray.slice(2); // removes them from start of array
+        trackArray =trackArray.slice(2);
+        artistArray= artistArray.slice(2)
+
+    }
+  }
+
+  if(trackArray.length % 2 !== 0)
+  titleOne.innerText = `${trackArray[0]} by ${artistArray[0]}`;
+  titleTwo.innerText = `${trackArray[1]} by ${artistArray[1]}`;
+  imageOne.src = artArray[0];
+  imageTwo.src = artArray[1];
+  songOne.id = danceArray [0];
+  songTwo.id = danceArray [1];
+  console.log(danceArray);
+  artArray = artArray.slice(2);
+  danceArray = danceArray.slice(2); // removes them from start of array
+  trackArray =trackArray.slice(2);
+  artistArray= artistArray.slice(2)
+
+  // display helper function for selected playlist
+
+  const displaySelected = async function (){
+    await sleep(200);
+    startPage.classList.remove("hide");
+    selected.innerText= `You chose ${selectedPlaylist}`;
+    selectedImg.src = selectedPlaylistImg;
+
   }
 //event listener for playlist menu
 go.addEventListener('click', function(){
@@ -165,8 +208,8 @@ go.addEventListener('click', function(){
     searchDiv.classList.add('hide');
     console.log(input)
     getSearch(token,input);
-    sleep(100);
-    selected.innerText= `You chose ${selectedPlaylist}`
+    displaySelected();
+
     
 })
   
@@ -174,7 +217,7 @@ go.addEventListener('click', function(){
 startButton.addEventListener("click", function(e){
     e.stopPropagation();
     gamePage.classList.remove("hide");
-    startButton.classList.add("hide");
+    startPage.classList.add("hide");
     createPlayer();
     console.log('game starting!')
     //fetch artist, song, album art and dancebility index from spotify
@@ -215,14 +258,14 @@ const playGame = function(currentOption, otherOption) {
     playGame(songTwo,songOne)
     console.log("clicked!")
     score.innerText = `SCORE : ${playerPoints}`
-    if(trackArray.length > 0) {
+    if(trackArray.length > 1) {
         nextRound();
     } else {
         endGame();
     }
 });
 
-// need to make sure that when user clicks one, they cannot click the other one
+
 
 //next round set up
 
