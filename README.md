@@ -10,6 +10,11 @@ Dance off is a game based on spotify's danceability index for each track, made u
 #Background
 Danceoff uses spotify's api to access search, audio features and playlist endpoints
 
+#
+If you'd like to try the game, please get a clientId and clientSecret from spotify developer dashboard
+
+
+https://developer.spotify.com/dashboard/login
 
 
     
