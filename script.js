@@ -181,18 +181,7 @@ function sleep(ms) {
     }
   }
 
-  if(trackArray.length % 2 !== 0)
-  titleOne.innerText = `${trackArray[0]} by ${artistArray[0]}`;
-  titleTwo.innerText = `${trackArray[1]} by ${artistArray[1]}`;
-  imageOne.src = artArray[0];
-  imageTwo.src = artArray[1];
-  songOne.id = danceArray [0];
-  songTwo.id = danceArray [1];
-  console.log(danceArray);
-  artArray = artArray.slice(2);
-  danceArray = danceArray.slice(2); // removes them from start of array
-  trackArray =trackArray.slice(2);
-  artistArray= artistArray.slice(2)
+
 
   // display helper function for selected playlist
 
