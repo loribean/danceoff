@@ -7,7 +7,6 @@ const clientSecret :YOUR CLIENT SECRET HERE
 
 
 
-
 let token;
 let data ;
 let album ;
@@ -73,7 +72,7 @@ _getToken();
 
 // Using the token we got in order to acesss spotify's endpoints
 
-
+//returns a playlist
 const getSearch = async (token,input) =>{
     const q = input;
     const type = "playlist";
@@ -90,7 +89,7 @@ const getSearch = async (token,input) =>{
             console.log(playlistSearch);
 
 }
-
+//returns a playlist items
 const getPlaylistItems = async (token) => {
     const fields = "items(track(id%2Cname%2Calbum(images%2Cartists)))";
     const limit = 40;
@@ -141,11 +140,11 @@ const getDanceAll = async function () {
 
 
 
-// populate song and art into containers:
+//sleep function to force our js to WAIT
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
   };
-
+// populate song and art into containers:
   async function populate() {
     console.log('Taking a break...');
     await sleep(500);
@@ -154,18 +153,7 @@ function sleep(ms) {
         artArray.pop();
         artistArray.pop();
         danceArray.pop();
-        titleOne.innerText = `${trackArray[0]} by ${artistArray[0]}`;
-        titleTwo.innerText = `${trackArray[1]} by ${artistArray[1]}`;
-        imageOne.src = artArray[0];
-        imageTwo.src = artArray[1];
-        songOne.id = danceArray [0];
-        songTwo.id = danceArray [1];
-        console.log(danceArray);
-        artArray = artArray.slice(2);
-        danceArray = danceArray.slice(2); // removes them from start of array
-        trackArray =trackArray.slice(2);
-        artistArray= artistArray.slice(2)
-    }else if (trackArray.length % 2 === 0){
+    }
         titleOne.innerText = `${trackArray[0]} by ${artistArray[0]}`;
         titleTwo.innerText = `${trackArray[1]} by ${artistArray[1]}`;
         imageOne.src = artArray[0];
@@ -179,8 +167,29 @@ function sleep(ms) {
         artistArray= artistArray.slice(2)
 
     }
-  }
+  
+// DOM manipulation : creating player 
+function createPlayer() { 
+              
+    /* Create iframe element */ 
+    var ifram = document.createElement("IFRAME"); 
+      
+    /* Set the source attribute */ 
+    ifram.setAttribute("src",  
+    `https://open.spotify.com/embed/playlist/${playlist_id}`); 
+      
+    /* Set the iframe height */ 
+    ifram.setAttribute("height", "300"); 
+      
+    /* Set the iframe width */ 
+    ifram.setAttribute("width", "380"); 
 
+    ifram.setAttribute("frameborder", "0");
+    ifram.setAttribute("allowtransparency", "true");
+    ifram.setAttribute("allow", "encrypted-media");
+      
+    document.body.appendChild(ifram); 
+} 
 
 
   // display helper function for selected playlist
@@ -292,24 +301,3 @@ const endGame = function() {
     }
 }
 
-function createPlayer() { 
-              
-    /* Create iframe element */ 
-    var ifram = document.createElement("IFRAME"); 
-      
-    /* Set the source attribute */ 
-    ifram.setAttribute("src",  
-    `https://open.spotify.com/embed/playlist/${playlist_id}`); 
-      
-    /* Set the iframe height */ 
-    ifram.setAttribute("height", "300"); 
-      
-    /* Set the iframe width */ 
-    ifram.setAttribute("width", "380"); 
-
-    ifram.setAttribute("frameborder", "0");
-    ifram.setAttribute("allowtransparency", "true");
-    ifram.setAttribute("allow", "encrypted-media");
-      
-    document.body.appendChild(ifram); 
-} 
